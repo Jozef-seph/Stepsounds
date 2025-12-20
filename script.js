@@ -35,13 +35,30 @@ document.addEventListener('DOMContentLoaded', function() {
             const submitButton = contactForm.querySelector('button[type="submit"]');
             const originalButtonText = submitButton.textContent;
             
+            // Get the name from the form before it's cleared
+            const nameInput = document.getElementById('name');
+            const userName = nameInput ? nameInput.value.trim() : '';
+            
             submitButton.disabled = true;
             submitButton.textContent = 'Sending...';
             
+            // Wait for form to submit, then clear and show success
             setTimeout(function() {
-                formMessage.textContent = 'Thank you! Your message has been sent successfully. I\'ll get back to you soon.';
+                // Clear all form fields
+                contactForm.reset();
+                
+                // Create personalized thank you message
+                let thankYouMessage = 'Thank you for contacting stepsounds';
+                if (userName) {
+                    thankYouMessage = `Thank you ${userName} for contacting stepsounds`;
+                }
+                thankYouMessage += '. We will get back to you soon!';
+                
+                // Show success message
+                formMessage.textContent = thankYouMessage;
                 formMessage.className = 'form-message success';
                 
+                // Reset button and hide message after delay
                 setTimeout(function() {
                     submitButton.disabled = false;
                     submitButton.textContent = originalButtonText;
@@ -69,13 +86,36 @@ document.addEventListener('DOMContentLoaded', function() {
             const submitButton = bookingForm.querySelector('button[type="submit"]');
             const originalButtonText = submitButton.textContent;
             
+            // Get the name from the form before it's cleared
+            const bookingNameInput = document.getElementById('bookingName');
+            const userName = bookingNameInput ? bookingNameInput.value.trim() : '';
+            
             submitButton.disabled = true;
             submitButton.textContent = 'Booking...';
             
+            // Wait for form to submit, then clear and show success
             setTimeout(function() {
-                formMessage.textContent = 'Thank you! Your booking request has been sent successfully. I\'ll confirm your appointment time soon via email.';
+                // Clear all form fields
+                bookingForm.reset();
+                
+                // Reset min date for booking form
+                if (dateInput) {
+                    const today = new Date().toISOString().split('T')[0];
+                    dateInput.setAttribute('min', today);
+                }
+                
+                // Create personalized thank you message
+                let thankYouMessage = 'Thank you for contacting stepsounds';
+                if (userName) {
+                    thankYouMessage = `Thank you ${userName} for contacting stepsounds`;
+                }
+                thankYouMessage += '. We will get back to you soon to confirm your appointment!';
+                
+                // Show success message
+                formMessage.textContent = thankYouMessage;
                 formMessage.className = 'form-message success';
                 
+                // Reset button and hide message after delay
                 setTimeout(function() {
                     submitButton.disabled = false;
                     submitButton.textContent = originalButtonText;

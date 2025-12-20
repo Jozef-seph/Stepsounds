@@ -1177,7 +1177,7 @@ body {
 .form-group select:focus,
 .form-group textarea:focus {
     outline: none;
-    border-color: var(--primary-color);
+    border-color: var(--border-color);
 }
 
 .form-group textarea {
@@ -1260,7 +1260,7 @@ footer {
     position: fixed;
     bottom: 20px;
     right: 20px;
-    z-index: 9999;
+    z-index: 10000;
     font-family: inherit;
 }
 
@@ -1272,19 +1272,27 @@ footer {
     justify-content: center;
     cursor: pointer;
     transition: all 0.3s;
-    font-size: 3rem;
     padding: 0;
-    width: auto;
-    height: auto;
+    width: 60px;
+    height: 60px;
     position: relative;
+    border-radius: 50%;
 }
 
 .chat-toggle:hover {
-    transform: scale(1.15);
+    transform: scale(1.1);
 }
 
-.chat-toggle span {
+.chat-robot-icon {
+    width: 100%;
+    height: 100%;
     display: block;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.chat-toggle:hover .chat-robot-icon {
+    transform: scale(1.05);
 }
 
 /* Tooltip for chat toggle */
@@ -1334,17 +1342,20 @@ footer {
 }
 
 .chat-container {
-    position: absolute;
+    position: fixed;
     bottom: 80px;
-    right: 0;
-    width: 350px;
-    height: 500px;
+    right: 20px;
+    width: 320px;
+    max-width: calc(100vw - 40px);
+    height: 450px;
+    max-height: calc(100vh - 100px);
     background: white;
     border-radius: 15px;
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
     display: none;
     flex-direction: column;
     overflow: hidden;
+    z-index: 10000;
 }
 
 .chat-container.active {
@@ -1462,8 +1473,8 @@ footer {
 
 .chat-input-container input:focus {
     border-color: var(--accent-color);
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-    transform: translateY(-2px);
+    box-shadow: none;
+    transform: none;
 }
 
 .chat-input-container button {
@@ -1872,7 +1883,7 @@ img {
 }
 
 /* General image hover - applies to all images unless overridden */
-img:hover:not(.hero-video-background img):not(.chat-toggle img):not(.hero-video-background video) {
+img:hover:not(.hero-video-background img):not(.chat-toggle img):not(.chat-robot-icon):not(.hero-video-background video) {
     transform: scale(1.05) !important;
     filter: brightness(1.1) !important;
 }
@@ -1888,13 +1899,13 @@ img:hover:not(.hero-video-background img):not(.chat-toggle img):not(.hero-video-
     filter: brightness(1.1) !important;
 }
 
-/* Form input focus animations */
-input:focus,
+/* Form input focus animations -*/
+input:focus:not(.chat-input-container input),
 textarea:focus,
 select:focus {
-    transform: scale(1.02);
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-    animation: glow 2s ease infinite;
+    transform: none;
+    box-shadow: none;
+    animation: none;
 }
 
 /* Hero section always visible */
@@ -2096,15 +2107,71 @@ a, button, input, select, textarea {
     }
 
     .chat-container {
-        width: calc(100% - 40px);
-        right: 20px;
-        left: 20px;
-        height: 450px;
+        position: fixed;
+        width: calc(100vw - 20px);
+        max-width: 100%;
+        right: 10px;
+        left: auto;
+        height: calc(100vh - 80px);
+        max-height: 550px;
+        bottom: 70px;
+        border-radius: 15px 15px 0 0;
     }
 
     .ai-chat-widget {
         bottom: 15px;
         right: 15px;
+        z-index: 10001;
+    }
+
+    .chat-toggle {
+        width: 55px;
+        height: 55px;
+    }
+
+    .chat-header {
+        padding: 0.75rem;
+        flex-shrink: 0;
+    }
+
+    .chat-header h3 {
+        font-size: 1rem;
+    }
+
+    .chat-messages {
+        padding: 0.75rem;
+        flex: 1;
+        min-height: 0;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .message {
+        max-width: 85%;
+        padding: 0.6rem 0.8rem;
+        font-size: 0.9rem;
+    }
+
+    .chat-input-container {
+        padding: 0.75rem;
+        flex-shrink: 0;
+        border-top: 1px solid var(--border-color);
+    }
+
+    .chat-input-container input {
+        padding: 0.6rem;
+        font-size: 0.9rem;
+    }
+
+    .chat-input-container button {
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
+    }
+
+    .chat-close {
+        width: 28px;
+        height: 28px;
+        font-size: 1.3rem;
     }
 
     .hero-container {
@@ -2319,6 +2386,27 @@ a, button, input, select, textarea {
 
     .section-header {
         margin-bottom: 3rem;
+    }
+}
+
+/* Mobile-specific chat widget improvements */
+@media (max-width: 480px) {
+    .ai-chat-widget {
+        bottom: 10px;
+        right: 10px;
+    }
+
+    .chat-toggle {
+        width: 50px;
+        height: 50px;
+    }
+
+    .chat-container {
+        width: calc(100vw - 10px);
+        right: 5px;
+        height: calc(100vh - 70px);
+        max-height: 550px;
+        bottom: 60px;
     }
 }
 
